@@ -1,23 +1,28 @@
-require('dotenv').config();
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const helmet = require('helmet');
-const { NODE_ENV } = require('./config');
+require("dotenv").config();
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const helmet = require("helmet");
+const { NODE_ENV } = require("./config");
 
-const foldersRouter = require('./folders/folders-router');
-const notesRouter = require('./notes/notes-router');
+const foldersRouter = require("./folders/folders-router");
+const notesRouter = require("./notes/notes-router");
 
 const app = express();
 
-const morganOption = (NODE_ENV === 'production' ? 'tiny' : 'common');
+const morganOption = NODE_ENV === "production" ? "tiny" : "common";
+
+var corsOptions = {
+  origin: "https://murmuring-hollows-11316.herokuapp.com",
+  optionsSuccessStatus: 200,
+};
 
 app.use(morgan(morganOption));
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 
-app.use('/api/folders', foldersRouter);
-app.use('/api/notes', notesRouter);
+app.use("/api/folders", foldersRouter);
+app.use("/api/notes", notesRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('Server running on port 8000! Good luck.');
@@ -25,9 +30,9 @@ app.use('/api/notes', notesRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
-  if (NODE_ENV === 'production') {
+  if (NODE_ENV === "production") {
     //basic error on production
-    response = { error: { message: 'server error' } };
+    response = { error: { message: "server error" } };
   } else {
     //more complex error for development
     console.error(error);
