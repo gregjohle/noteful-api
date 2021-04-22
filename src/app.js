@@ -13,7 +13,7 @@ const app = express();
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 var corsOptions = {
-  origin: "https://murmuring-hollows-11316.herokuapp.com",
+  origin: "*",
   optionsSuccessStatus: 200,
 };
 
