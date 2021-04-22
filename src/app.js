@@ -12,14 +12,9 @@ const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
-var corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200,
-};
-
 app.use(morgan(morganOption));
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api/folders", foldersRouter);
 app.use("/api/notes", notesRouter);
